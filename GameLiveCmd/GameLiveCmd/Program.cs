@@ -11,7 +11,11 @@ namespace GameLiveCmd
         private static void Main(string[] args)
         {
             var cglr = new ConsoleGameOfLiveRealisator();
-            cglr.WriteFirstGeneration();
+            var grid = cglr.MakeRandomGeneration();
+            cglr.WriteGeneration(grid);
+            grid = cglr.CalculateNextGeneration(grid);
+            Console.WriteLine();
+            cglr.WriteGeneration(grid);
             Console.Read();
         }
 
@@ -26,13 +30,14 @@ namespace GameLiveCmd
             private const string LiveDotChar = "|-|";
             private const string DeadDotChar = "| |";
 
-            public void WriteFirstGeneration()
+
+            private const int GridSize = 20;
+
+            public void WriteGeneration(byte[,] grid)
             {
-                var grid = new byte[20, 20];
-                grid = MakeGrid(grid);
-                for (int i = 0; i < 20; i++)
+                for (int i = 0; i < GridSize; i++)
                 {
-                    for (int j = 0; j < 20; j++)
+                    for (int j = 0; j < GridSize; j++)
                     {
                         if (grid[i, j] == 1)
                         {
@@ -45,14 +50,69 @@ namespace GameLiveCmd
                     }
                     Console.WriteLine();
                 }
+                CalculateNextGeneration(grid);
             }
 
-            private byte[,] MakeGrid(byte[,] grid)
+            public byte[,] CalculateNextGeneration(byte[,] grid)
             {
-                var rnd = new Random(DateTime.Now.Second);
-                for (int i = 0; i < 20; i++)
+                for (int i = 0; i < GridSize; i++)
                 {
-                    for (int j = 0; j < 20; j++)
+                    for (int j = 0; j < GridSize; j++)
+                    {
+
+                        var countNeigbors = CountNeigbors(grid, i, j);
+                        if (grid[i, j] == 1)
+                        {
+                            if (countNeigbors != 2 || countNeigbors != 3)
+                                grid[i, j] = 0;
+                        }
+                        else
+                        {
+                            if (countNeigbors == 3)
+                            {
+                                grid[i, j] = 1;
+                            }
+                        }
+                    }
+                }
+                return grid;
+            }
+
+            private int CountNeigbors(byte[,] grid, int i, int j)
+            {
+                int countNeigbors = 0;
+                try
+                {
+                    if (grid[i, j + 1] == 1)
+                        countNeigbors++;
+                    if (grid[i + 1, j] == 1)
+                        countNeigbors++;
+                    if (grid[i - 1, j] == 1)
+                        countNeigbors++;
+                    if (grid[i, j - 1] == 1)
+                        countNeigbors++;
+                    if (grid[i + 1, j + 1] == 1)
+                        countNeigbors++;
+                    if (grid[i - 1, j - 1] == 1)
+                        countNeigbors++;
+                    if (grid[i + 1, j - 1] == 1)
+                        countNeigbors++;
+                    if (grid[i - 1, j + 1] == 1)
+                        countNeigbors++;
+                }
+                catch (Exception)
+                {
+                }
+                return countNeigbors;
+            }
+
+            public byte[,] MakeRandomGeneration()
+            {
+                var grid = new byte[GridSize,GridSize];
+                var rnd = new Random(DateTime.Now.Second);
+                for (int i = 0; i < GridSize; i++)
+                {
+                    for (int j = 0; j < GridSize; j++)
                     {
                         grid[i, j] = (byte) rnd.Next(2);
                     }
