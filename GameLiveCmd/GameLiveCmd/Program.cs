@@ -10,12 +10,17 @@ namespace GameLiveCmd
     {
         private static void Main(string[] args)
         {
+            Console.WriteLine(DateTime.Now);
             var cglr = new ConsoleGameOfLiveRealisator();
             var grid = cglr.MakeRandomGeneration();
             cglr.WriteGeneration(grid);
-            grid = cglr.CalculateNextGeneration(grid);
-            Console.WriteLine();
-            cglr.WriteGeneration(grid);
+            for (int i = 0; i < 5; i++)
+            {
+                grid = cglr.CalculateNextGeneration(grid);
+                Console.WriteLine();
+                cglr.WriteGeneration(grid);
+                Console.WriteLine(DateTime.Now);
+            }
             Console.Read();
         }
 
@@ -55,6 +60,7 @@ namespace GameLiveCmd
 
             public byte[,] CalculateNextGeneration(byte[,] grid)
             {
+                var newGrid = grid;
                 for (int i = 0; i < GridSize; i++)
                 {
                     for (int j = 0; j < GridSize; j++)
@@ -63,19 +69,19 @@ namespace GameLiveCmd
                         var countNeigbors = CountNeigbors(grid, i, j);
                         if (grid[i, j] == 1)
                         {
-                            if (countNeigbors != 2 || countNeigbors != 3)
-                                grid[i, j] = 0;
+                            if (countNeigbors < 2 || countNeigbors > 3)
+                                newGrid[i, j] = 0;
                         }
                         else
                         {
                             if (countNeigbors == 3)
                             {
-                                grid[i, j] = 1;
+                                newGrid[i, j] = 1;
                             }
                         }
                     }
                 }
-                return grid;
+                return newGrid;
             }
 
             private int CountNeigbors(byte[,] grid, int i, int j)
@@ -85,24 +91,59 @@ namespace GameLiveCmd
                 {
                     if (grid[i, j + 1] == 1)
                         countNeigbors++;
+                }
+                catch
+                {}
+                try
+                {
                     if (grid[i + 1, j] == 1)
                         countNeigbors++;
+                }
+                catch
+                {
+                }
+                try
+                {
                     if (grid[i - 1, j] == 1)
                         countNeigbors++;
+                }
+                catch
+                {
+                }
+                try
+                {
                     if (grid[i, j - 1] == 1)
                         countNeigbors++;
+                }
+                catch
+                {
+                }
+                try
+                {
                     if (grid[i + 1, j + 1] == 1)
                         countNeigbors++;
+                }
+                catch
+                {
+                }
+                try
+                {
                     if (grid[i - 1, j - 1] == 1)
                         countNeigbors++;
+                }
+                catch { }
+                try
+                {
                     if (grid[i + 1, j - 1] == 1)
                         countNeigbors++;
+                }
+                catch { }
+                try
+                {
                     if (grid[i - 1, j + 1] == 1)
                         countNeigbors++;
                 }
-                catch (Exception)
-                {
-                }
+                catch { }
                 return countNeigbors;
             }
 
