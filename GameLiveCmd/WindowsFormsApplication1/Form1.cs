@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using GameOfLifeImpl;
 
 namespace WindowsFormsApplication1
 {
@@ -47,6 +48,23 @@ namespace WindowsFormsApplication1
         {
             Label label = (Label)sender;
             label.BackColor = label.BackColor == SystemColors.ActiveCaptionText ? SystemColors.ButtonHighlight : SystemColors.ActiveCaptionText;
+        }
+    }
+
+    public static class WorkWithControls
+    {
+        public static Label GetLabelByName(this Control.ControlCollection controls, string name)
+        {
+            foreach (var control in controls)
+            {
+                if (control is Label)
+                {
+                    var label = (Label) control;
+                    if (label.Name == name)
+                        return label;
+                }
+            }
+            return null;
         }
     }
 }

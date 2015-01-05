@@ -1,16 +1,20 @@
-﻿namespace GameOfLifeImpl
-{
-    class FormsGameOfLifeRealisator : IGameOfLifeRealisator
-    {
+﻿using System.Drawing;
+using System.Windows.Forms;
 
-        public void WriteLiveDot(int i, int j)
+namespace GameOfLifeImpl
+{
+    public class FormsGameOfLifeRealisator : IGameOfLifeRealisator
+    {
+        private readonly Color _liveDot = SystemColors.ActiveCaptionText;
+        private readonly Color _deadDot = SystemColors.ButtonHighlight;
+        public void WriteLiveDot(Label label)
         {
-            throw new System.NotImplementedException();
+            label.BackColor = _liveDot;
         }
 
-        public void WriteDeadDot(int i, int j)
+        public void WriteDeadDot(Label label)
         {
-            throw new System.NotImplementedException();
+            label.BackColor = _deadDot;
         }
 
         public void WriteLiveDot()
@@ -21,6 +25,11 @@
         public void WriteDeadDot()
         {
             throw new System.NotImplementedException();
+        }
+
+        public void WriteGeneration(byte[,] grid)
+        {
+            
         }
     }
 }
