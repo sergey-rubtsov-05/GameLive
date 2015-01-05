@@ -13,6 +13,9 @@ namespace WindowsFormsApplication1
 {
     public partial class Form1 : Form
     {
+        private byte[,] _grid;
+
+        readonly FormsGameOfLifeRealisator _gameOfLife = new FormsGameOfLifeRealisator();
         public Form1()
         {
             InitializeComponent();
@@ -49,22 +52,20 @@ namespace WindowsFormsApplication1
             Label label = (Label)sender;
             label.BackColor = label.BackColor == SystemColors.ActiveCaptionText ? SystemColors.ButtonHighlight : SystemColors.ActiveCaptionText;
         }
-    }
 
-    public static class WorkWithControls
-    {
-        public static Label GetLabelByName(this Control.ControlCollection controls, string name)
+        private void button1_Click(object sender, EventArgs e)
         {
-            foreach (var control in controls)
+            _grid = _gameOfLife.MakeRandomGeneration();
+            _gameOfLife.WriteGeneration(_grid, Controls);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < 3; i++)
             {
-                if (control is Label)
-                {
-                    var label = (Label) control;
-                    if (label.Name == name)
-                        return label;
-                }
+                _grid = _gameOfLife.CalculateNextGeneration(_grid);
+                _gameOfLife.WriteGeneration(_grid, Controls);
             }
-            return null;
         }
     }
 }

@@ -10,6 +10,5 @@ namespace GameOfLifeImpl
     {
         void WriteLiveDot();
         void WriteDeadDot();
-        void WriteGeneration(byte[,] grid);
     }
 }
