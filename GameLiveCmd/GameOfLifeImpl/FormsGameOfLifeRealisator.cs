@@ -33,7 +33,7 @@ namespace GameOfLifeImpl
             {
                 for (int j = 0; j < GridSize; j++)
                 {
-                    var labelByName = contorls.GetLabelByName("label" + i + "_" + j);
+                    var labelByName = contorls.GetLabelByName(i + "_" + j);
                     if (grid[i, j] == 1)
                     {
                         WriteLiveDot(labelByName);
@@ -44,6 +44,26 @@ namespace GameOfLifeImpl
                     }
                 }
             }
+        }
+
+        public byte[,] GetGridFromLabels(Control.ControlCollection controls)
+        {
+            var grid = new byte[GridSize,GridSize];
+            foreach (var control in controls)
+            {
+                var label = control as Label;
+                if (label != null)
+                {
+                    var labelNameParts = label.Name.Split('_');
+                    var i = int.Parse(labelNameParts[0]);
+                    var j = int.Parse(labelNameParts[1]);
+                    if (label.BackColor == _liveDot)
+                        grid[i, j] = 1;
+                    else
+                        grid[i, j] = 0;
+                }
+            }
+            return grid;
         }
     }
 

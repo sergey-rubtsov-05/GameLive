@@ -23,7 +23,7 @@ namespace WindowsFormsApplication1
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            const int gridSize = 20;
+            const int gridSize = 6;
             int x;
             int y = 10;
             for (int i = 0; i < gridSize; i++)
@@ -33,10 +33,10 @@ namespace WindowsFormsApplication1
                 for (int j = 0; j < gridSize; j++)
                 {
                     var label = new Label();
-                    label.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+                    label.BackColor = System.Drawing.SystemColors.ButtonHighlight;
                     label.Location = new System.Drawing.Point(x + (j * 10), y);
                     x += 2;
-                    label.Name = "label" + i + "_" + j;
+                    label.Name = i + "_" + j;
                     label.Size = new System.Drawing.Size(10, 10);
                     label.TabIndex = 0;
                     label.Text = "";
@@ -61,11 +61,9 @@ namespace WindowsFormsApplication1
 
         private void button2_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < 3; i++)
-            {
-                _grid = _gameOfLife.CalculateNextGeneration(_grid);
-                _gameOfLife.WriteGeneration(_grid, Controls);
-            }
+            _grid = _gameOfLife.GetGridFromLabels(Controls);
+            _grid = _gameOfLife.CalculateNextGeneration(_grid);
+            _gameOfLife.WriteGeneration(_grid, Controls);
         }
     }
 }
