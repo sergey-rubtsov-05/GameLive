@@ -1,4 +1,7 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
+using System.Globalization;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace GameOfLifeImpl
@@ -27,13 +30,13 @@ namespace GameOfLifeImpl
             throw new System.NotImplementedException();
         }
 
-        public void WriteGeneration(byte[,] grid, Control.ControlCollection contorls)
+        public void WriteGeneration(byte[,] grid, List<Label> contorls)
         {
             for (int i = 0; i < GridSize; i++)
             {
                 for (int j = 0; j < GridSize; j++)
                 {
-                    var labelByName = contorls.GetLabelByName(i + "_" + j);
+                    var labelByName = contorls.Find(o => o.Name.Equals(string.Concat(i, "_", j)));
                     if (grid[i, j] == 1)
                     {
                         WriteLiveDot(labelByName);
@@ -46,41 +49,20 @@ namespace GameOfLifeImpl
             }
         }
 
-        public byte[,] GetGridFromLabels(Control.ControlCollection controls)
+        public byte[,] GetGridFromLabels(IEnumerable<Label> controls)
         {
             var grid = new byte[GridSize,GridSize];
-            foreach (var control in controls)
+            foreach (var label in controls)
             {
-                var label = control as Label;
-                if (label != null)
-                {
-                    var labelNameParts = label.Name.Split('_');
-                    var i = int.Parse(labelNameParts[0]);
-                    var j = int.Parse(labelNameParts[1]);
-                    if (label.BackColor == _liveDot)
-                        grid[i, j] = 1;
-                    else
-                        grid[i, j] = 0;
-                }
+                var labelNameParts = label.Name.Split('_');
+                var i = int.Parse(labelNameParts[0]);
+                var j = int.Parse(labelNameParts[1]);
+                if (label.BackColor == _liveDot)
+                    grid[i, j] = 1;
+                else
+                    grid[i, j] = 0;
             }
             return grid;
-        }
-    }
-
-    public static class WorkWithControls
-    {
-        public static Label GetLabelByName(this Control.ControlCollection controls, string name)
-        {
-            foreach (var control in controls)
-            {
-                if (control is Label)
-                {
-                    var label = (Label)control;
-                    if (label.Name == name)
-                        return label;
-                }
-            }
-            return null;
         }
     }
 }

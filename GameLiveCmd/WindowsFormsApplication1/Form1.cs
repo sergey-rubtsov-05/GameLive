@@ -14,15 +14,13 @@ namespace WindowsFormsApplication1
     public partial class Form1 : Form
     {
         private byte[,] _grid;
+        private readonly List<Label> labels; 
 
         readonly FormsGameOfLifeRealisator _gameOfLife = new FormsGameOfLifeRealisator();
         public Form1()
         {
             InitializeComponent();
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
+            labels = new List<Label>();
             const int gridSize = 20;
             int x;
             int y = 10;
@@ -41,10 +39,16 @@ namespace WindowsFormsApplication1
                     label.TabIndex = 0;
                     label.Text = "";
                     label.Click += ChangeDotStatus;
+                    labels.Add(label);
                     Controls.Add(label);
                 }
                 y += 2;
             }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            
         }
 
         private void ChangeDotStatus(object sender, EventArgs e)
@@ -56,14 +60,14 @@ namespace WindowsFormsApplication1
         private void button1_Click(object sender, EventArgs e)
         {
             _grid = _gameOfLife.MakeRandomGeneration();
-            _gameOfLife.WriteGeneration(_grid, Controls);
+            _gameOfLife.WriteGeneration(_grid, labels);
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            _grid = _gameOfLife.GetGridFromLabels(Controls);
+            _grid = _gameOfLife.GetGridFromLabels(labels);
             _grid = _gameOfLife.CalculateNextGeneration(_grid);
-            _gameOfLife.WriteGeneration(_grid, Controls);
+            _gameOfLife.WriteGeneration(_grid, labels);
         }
     }
 }
