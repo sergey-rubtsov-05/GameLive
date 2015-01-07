@@ -8,7 +8,7 @@ namespace GameOfLifeImpl
         protected const int GridSize = 20;
         public byte[,] CalculateNextGeneration(byte[,] grid)
         {
-            var newGrid = grid;
+            var newGrid = (byte[,])grid.Clone();
             for (int i = 0; i < GridSize; i++)
             {
                 for (int j = 0; j < GridSize; j++)

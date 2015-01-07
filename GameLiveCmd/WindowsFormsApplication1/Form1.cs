@@ -23,7 +23,7 @@ namespace WindowsFormsApplication1
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            const int gridSize = 6;
+            const int gridSize = 20;
             int x;
             int y = 10;
             for (int i = 0; i < gridSize; i++)
