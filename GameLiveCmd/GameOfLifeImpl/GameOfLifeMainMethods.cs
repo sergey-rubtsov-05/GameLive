@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace GameOfLifeImpl
 {
@@ -11,23 +12,39 @@ namespace GameOfLifeImpl
             var newGrid = (byte[,])grid.Clone();
             for (int i = 0; i < GridSize; i++)
             {
-                for (int j = 0; j < GridSize; j++)
+                Parallel.For(0, GridSize, ctr =>
                 {
-
-                    var countNeigbors = CountNeigbors(grid, i, j);
-                    if (grid[i, j] == 1)
+                    var countNeigbors = CountNeigbors(grid, i, ctr);
+                    if (grid[i, ctr] == 1)
                     {
                         if (countNeigbors < 2 || countNeigbors > 3)
-                            newGrid[i, j] = 0;
+                            newGrid[i, ctr] = 0;
                     }
                     else
                     {
                         if (countNeigbors == 3)
                         {
-                            newGrid[i, j] = 1;
+                            newGrid[i, ctr] = 1;
                         }
                     }
-                }
+                });
+                //for (int j = 0; j < GridSize; j++)
+                //{
+
+                //    var countNeigbors = CountNeigbors(grid, i, j);
+                //    if (grid[i, j] == 1)
+                //    {
+                //        if (countNeigbors < 2 || countNeigbors > 3)
+                //            newGrid[i, j] = 0;
+                //    }
+                //    else
+                //    {
+                //        if (countNeigbors == 3)
+                //        {
+                //            newGrid[i, j] = 1;
+                //        }
+                //    }
+                //}
             }
             return newGrid;
         }

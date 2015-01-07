@@ -1,11 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using GameOfLifeImpl;
 
@@ -14,13 +9,13 @@ namespace WindowsFormsApplication1
     public partial class Form1 : Form
     {
         private byte[,] _grid;
-        private readonly List<Label> labels; 
+        private readonly List<Label> _labels; 
 
         readonly FormsGameOfLifeRealisator _gameOfLife = new FormsGameOfLifeRealisator();
         public Form1()
         {
             InitializeComponent();
-            labels = new List<Label>();
+            _labels = new List<Label>();
             const int gridSize = 20;
             int x;
             int y = 10;
@@ -31,15 +26,15 @@ namespace WindowsFormsApplication1
                 for (int j = 0; j < gridSize; j++)
                 {
                     var label = new Label();
-                    label.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-                    label.Location = new System.Drawing.Point(x + (j * 10), y);
+                    label.BackColor = SystemColors.ButtonHighlight;
+                    label.Location = new Point(x + (j * 10), y);
                     x += 2;
                     label.Name = i + "_" + j;
-                    label.Size = new System.Drawing.Size(10, 10);
+                    label.Size = new Size(10, 10);
                     label.TabIndex = 0;
                     label.Text = "";
                     label.Click += ChangeDotStatus;
-                    labels.Add(label);
+                    _labels.Add(label);
                     Controls.Add(label);
                 }
                 y += 2;
@@ -53,21 +48,21 @@ namespace WindowsFormsApplication1
 
         private void ChangeDotStatus(object sender, EventArgs e)
         {
-            Label label = (Label)sender;
+            var label = (Label)sender;
             label.BackColor = label.BackColor == SystemColors.ActiveCaptionText ? SystemColors.ButtonHighlight : SystemColors.ActiveCaptionText;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             _grid = _gameOfLife.MakeRandomGeneration();
-            _gameOfLife.WriteGeneration(_grid, labels);
+            _gameOfLife.WriteGeneration(_grid, _labels);
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            _grid = _gameOfLife.GetGridFromLabels(labels);
+            _grid = _gameOfLife.GetGridFromLabels(_labels);
             _grid = _gameOfLife.CalculateNextGeneration(_grid);
-            _gameOfLife.WriteGeneration(_grid, labels);
+            _gameOfLife.WriteGeneration(_grid, _labels);
         }
     }
 }
