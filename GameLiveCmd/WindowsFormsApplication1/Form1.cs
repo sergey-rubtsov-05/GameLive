@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
 using GameOfLifeImpl;
@@ -18,19 +19,20 @@ namespace WindowsFormsApplication1
             _labels = new List<Label>();
             const int gridSize = 20;
             int x;
-            int y = 10;
+            const int labelSize = 12;
+            int y = labelSize;
             for (int i = 0; i < gridSize; i++)
             {
-                x = 10;
-                y = y + 10;
+                x = labelSize;
+                y = y + labelSize;
                 for (int j = 0; j < gridSize; j++)
                 {
                     var label = new Label();
                     label.BackColor = SystemColors.ButtonHighlight;
-                    label.Location = new Point(x + (j * 10), y);
+                    label.Location = new Point(x + (j * labelSize), y);
                     x += 2;
                     label.Name = i + "_" + j;
-                    label.Size = new Size(10, 10);
+                    label.Size = new Size(labelSize, labelSize);
                     label.TabIndex = 0;
                     label.Text = "";
                     label.Click += ChangeDotStatus;
@@ -41,11 +43,6 @@ namespace WindowsFormsApplication1
             }
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            
-        }
-
         private void ChangeDotStatus(object sender, EventArgs e)
         {
             var label = (Label)sender;
@@ -54,14 +51,32 @@ namespace WindowsFormsApplication1
 
         private void button1_Click(object sender, EventArgs e)
         {
-            _grid = _gameOfLife.MakeRandomGeneration();
-            _gameOfLife.WriteGeneration(_grid, _labels);
+            if (!backgroundWorker1.IsBusy)
+            {
+                backgroundWorker1.RunWorkerAsync(numericUpDown1.Value);
+            }
+        }
+
+        private void DoGenerations(object sender, DoWorkEventArgs e)
+        {
+            var iterationCount = int.Parse(e.Argument.ToString());
+            for (var i = 0; i < iterationCount; i++)
+            {
+                _gameOfLife.WriteGeneration(_grid, _labels);
+                _grid = _gameOfLife.CalculateNextGeneration(_grid);
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             _grid = _gameOfLife.GetGridFromLabels(_labels);
             _grid = _gameOfLife.CalculateNextGeneration(_grid);
+            _gameOfLife.WriteGeneration(_grid, _labels);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            _grid = _gameOfLife.MakeRandomGeneration();
             _gameOfLife.WriteGeneration(_grid, _labels);
         }
     }
