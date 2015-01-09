@@ -10,14 +10,14 @@ namespace WindowsFormsApplication1
     public partial class Form1 : Form
     {
         private byte[,] _grid;
-        private readonly List<Label> _labels; 
+        private readonly Label[,] _labels; 
 
         readonly FormsGameOfLifeRealisator _gameOfLife = new FormsGameOfLifeRealisator();
         public Form1()
         {
             InitializeComponent();
-            _labels = new List<Label>();
-            const int gridSize = 20;
+            const int gridSize = GameOfLifeMainMethods.GridSize;
+            _labels = new Label[gridSize, gridSize];
             int x;
             const int labelSize = 12;
             int y = labelSize;
@@ -36,7 +36,7 @@ namespace WindowsFormsApplication1
                     label.TabIndex = 0;
                     label.Text = "";
                     label.Click += ChangeDotStatus;
-                    _labels.Add(label);
+                    _labels[i,j] = label;
                     Controls.Add(label);
                 }
                 y += 2;

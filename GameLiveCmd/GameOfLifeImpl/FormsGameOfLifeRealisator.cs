@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace GameOfLifeImpl
@@ -28,13 +29,13 @@ namespace GameOfLifeImpl
             throw new System.NotImplementedException();
         }
 
-        public void WriteGeneration(byte[,] grid, List<Label> contorls)
+        public void WriteGeneration(byte[,] grid, Label[,] contorls)
         {
             for (int i = 0; i < GridSize; i++)
             {
                 for (int j = 0; j < GridSize; j++)
                 {
-                    var labelByName = contorls.Find(o => o.Name.Equals(string.Concat(i, "_", j)));
+                    var labelByName = contorls[i, j];//contorls.Find(o => o.Name.Equals(string.Concat(i, "_", j)));
                     if (grid[i, j] == 1)
                     {
                         WriteLiveDot(labelByName);
@@ -45,9 +46,10 @@ namespace GameOfLifeImpl
                     }
                 }
             }
+            Thread.Sleep(100);
         }
 
-        public byte[,] GetGridFromLabels(IEnumerable<Label> controls)
+        public byte[,] GetGridFromLabels(Label[,] controls)
         {
             var grid = new byte[GridSize,GridSize];
             foreach (var label in controls)

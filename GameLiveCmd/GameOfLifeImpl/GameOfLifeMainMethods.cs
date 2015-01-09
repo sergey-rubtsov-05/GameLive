@@ -6,7 +6,7 @@ namespace GameOfLifeImpl
     public class GameOfLifeMainMethods
     {
 
-        protected const int GridSize = 20;
+        public const int GridSize = 40;
         public byte[,] CalculateNextGeneration(byte[,] grid)
         {
             var newGrid = (byte[,])grid.Clone();
