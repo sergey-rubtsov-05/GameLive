@@ -38,7 +38,8 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(328, 32);
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button1.Location = new System.Drawing.Point(11, 32);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(132, 23);
             this.button1.TabIndex = 0;
@@ -48,7 +49,8 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(426, 61);
+            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button2.Location = new System.Drawing.Point(109, 61);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(112, 23);
             this.button2.TabIndex = 1;
@@ -62,14 +64,15 @@
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(466, 32);
+            this.numericUpDown1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.numericUpDown1.Location = new System.Drawing.Point(149, 32);
             this.numericUpDown1.Maximum = new decimal(new int[] {
             64000,
             0,
             0,
             0});
             this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(72, 20);
+            this.numericUpDown1.Size = new System.Drawing.Size(72, 22);
             this.numericUpDown1.TabIndex = 2;
             this.numericUpDown1.Value = new decimal(new int[] {
             100,
@@ -79,7 +82,8 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(328, 3);
+            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button3.Location = new System.Drawing.Point(11, 3);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(176, 23);
             this.button3.TabIndex = 3;
@@ -91,7 +95,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(550, 380);
+            this.ClientSize = new System.Drawing.Size(233, 227);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.button2);

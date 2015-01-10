@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace GameOfLifeImpl
 {
-    interface IGameOfLifeRealisator
+    public interface IGameOfLifeMainMethods
     {
-        void WriteLiveDot();
-        void WriteDeadDot();
+        byte[,] CalculateNextGeneration(byte[,] grid);
+        byte[,] MakeRandomGeneration();
     }
 }

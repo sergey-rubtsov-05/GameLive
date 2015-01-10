@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GameOfLifeImpl
 {
-    public class ConsoleGameOfLifeRealisator : GameOfLifeMainMethods, IGameOfLifeRealisator
+    public class ConsoleGameOfLifeRealisator : GameOfLifeMainMethods
     {
         private const string LiveDotChar = "|-|";
         private const string DeadDotChar = "| |";
@@ -31,12 +27,12 @@ namespace GameOfLifeImpl
             CalculateNextGeneration(grid);
         }
 
-        public void WriteLiveDot()
+        private void WriteLiveDot()
         {
             Console.Write(LiveDotChar);
         }
 
-        public void WriteDeadDot()
+        private void WriteDeadDot()
         {
             Console.Write(DeadDotChar);
         }

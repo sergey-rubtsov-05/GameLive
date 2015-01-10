@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace GameOfLifeImpl
 {
-    public class GameOfLifeMainMethods
+    public class GameOfLifeMainMethods : IGameOfLifeMainMethods
     {
 
         public const int GridSize = 40;

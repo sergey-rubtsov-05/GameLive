@@ -1,32 +1,22 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
 
 namespace GameOfLifeImpl
 {
-    public class FormsGameOfLifeRealisator : GameOfLifeMainMethods, IGameOfLifeRealisator
+    public class FormsGameOfLifeRealisator : GameOfLifeMainMethods
     {
         private readonly Color _liveDot = SystemColors.ActiveCaptionText;
         private readonly Color _deadDot = SystemColors.ButtonHighlight;
-        public void WriteLiveDot(Label label)
+
+        private void WriteLiveDot(Label label)
         {
             label.BackColor = _liveDot;
         }
 
-        public void WriteDeadDot(Label label)
+        private void WriteDeadDot(Label label)
         {
             label.BackColor = _deadDot;
-        }
-
-        public void WriteLiveDot()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void WriteDeadDot()
-        {
-            throw new System.NotImplementedException();
         }
 
         public void WriteGeneration(byte[,] grid, Label[,] contorls)
@@ -35,7 +25,7 @@ namespace GameOfLifeImpl
             {
                 for (int j = 0; j < GridSize; j++)
                 {
-                    var labelByName = contorls[i, j];//contorls.Find(o => o.Name.Equals(string.Concat(i, "_", j)));
+                    var labelByName = contorls[i, j];
                     if (grid[i, j] == 1)
                     {
                         WriteLiveDot(labelByName);

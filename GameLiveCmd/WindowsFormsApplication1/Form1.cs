@@ -20,7 +20,7 @@ namespace WindowsFormsApplication1
             _labels = new Label[gridSize, gridSize];
             int x;
             const int labelSize = 12;
-            int y = labelSize;
+            int y = labelSize + 70;
             for (int i = 0; i < gridSize; i++)
             {
                 x = labelSize;
@@ -40,6 +40,8 @@ namespace WindowsFormsApplication1
                     Controls.Add(label);
                 }
                 y += 2;
+                Height += labelSize;
+                Width += labelSize;
             }
         }
 
