@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
@@ -12,11 +11,12 @@ namespace WindowsFormsApplication1
         private byte[,] _grid;
         private readonly Label[,] _labels; 
 
-        readonly FormsGameOfLifeRealisator _gameOfLife = new FormsGameOfLifeRealisator();
+        readonly IGameOfLifeMainMethods _gameOfLife = new GameOfLifeMainMethods();
+        readonly FormsGameOfLifeRealisator _gameOfLifeForForms = new FormsGameOfLifeRealisator();
         public Form1()
         {
             InitializeComponent();
-            const int gridSize = GameOfLifeMainMethods.GridSize;
+            const int gridSize = GameOfLifeParameters.GridSize;
             _labels = new Label[gridSize, gridSize];
             int x;
             const int labelSize = 12;
@@ -64,22 +64,22 @@ namespace WindowsFormsApplication1
             var iterationCount = int.Parse(e.Argument.ToString());
             for (var i = 0; i < iterationCount; i++)
             {
-                _gameOfLife.WriteGeneration(_grid, _labels);
+                _gameOfLifeForForms.WriteGeneration(_grid, _labels);
                 _grid = _gameOfLife.CalculateNextGeneration(_grid);
             }
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            _grid = _gameOfLife.GetGridFromLabels(_labels);
+            _grid = _gameOfLifeForForms.GetGridFromLabels(_labels);
             _grid = _gameOfLife.CalculateNextGeneration(_grid);
-            _gameOfLife.WriteGeneration(_grid, _labels);
+            _gameOfLifeForForms.WriteGeneration(_grid, _labels);
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             _grid = _gameOfLife.MakeRandomGeneration();
-            _gameOfLife.WriteGeneration(_grid, _labels);
+            _gameOfLifeForForms.WriteGeneration(_grid, _labels);
         }
     }
 }

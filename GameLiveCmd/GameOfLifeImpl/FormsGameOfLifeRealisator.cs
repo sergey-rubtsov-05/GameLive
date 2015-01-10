@@ -4,7 +4,7 @@ using System.Windows.Forms;
 
 namespace GameOfLifeImpl
 {
-    public class FormsGameOfLifeRealisator : GameOfLifeMainMethods
+    public class FormsGameOfLifeRealisator : GameOfLifeParameters
     {
         private readonly Color _liveDot = SystemColors.ActiveCaptionText;
         private readonly Color _deadDot = SystemColors.ButtonHighlight;

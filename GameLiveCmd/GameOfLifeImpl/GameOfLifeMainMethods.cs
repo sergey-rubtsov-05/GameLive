@@ -3,10 +3,8 @@ using System.Threading.Tasks;
 
 namespace GameOfLifeImpl
 {
-    public class GameOfLifeMainMethods : IGameOfLifeMainMethods
+    public class GameOfLifeMainMethods : GameOfLifeParameters, IGameOfLifeMainMethods
     {
-
-        public const int GridSize = 40;
         public byte[,] CalculateNextGeneration(byte[,] grid)
         {
             var newGrid = (byte[,])grid.Clone();

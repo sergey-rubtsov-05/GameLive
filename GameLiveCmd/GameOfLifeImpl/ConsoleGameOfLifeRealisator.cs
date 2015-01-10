@@ -2,7 +2,7 @@
 
 namespace GameOfLifeImpl
 {
-    public class ConsoleGameOfLifeRealisator : GameOfLifeMainMethods
+    public class ConsoleGameOfLifeRealisator : GameOfLifeParameters
     {
         private const string LiveDotChar = "|-|";
         private const string DeadDotChar = "| |";
@@ -24,7 +24,6 @@ namespace GameOfLifeImpl
                 }
                 Console.WriteLine();
             }
-            CalculateNextGeneration(grid);
         }
 
         private void WriteLiveDot()
