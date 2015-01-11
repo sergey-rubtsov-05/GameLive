@@ -43,7 +43,9 @@
   <ItemGroup>
     <Compile Include="ConsoleGameOfLifeRealisator.cs" />
     <Compile Include="FormsGameOfLifeRealisator.cs" />
-    <Compile Include="GameOfLifeMainMethods.cs" />
+    <Compile Include="GameOfLifeMainMethodsMultiThread.cs" />
+    <Compile Include="GameOfLifeMainMethodsSingleThread.cs" />
+    <Compile Include="GameOfLifeParameters.cs" />
     <Compile Include="IGameOfLifeMainMethods.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

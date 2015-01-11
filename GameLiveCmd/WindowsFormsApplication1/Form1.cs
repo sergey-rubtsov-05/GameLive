@@ -11,7 +11,7 @@ namespace WindowsFormsApplication1
         private byte[,] _grid;
         private readonly Label[,] _labels; 
 
-        readonly IGameOfLifeMainMethods _gameOfLife = new GameOfLifeMainMethods();
+        readonly IGameOfLifeMainMethods _gameOfLife = new GameOfLifeMainMethodsSingleThread();
         readonly FormsGameOfLifeRealisator _gameOfLifeForForms = new FormsGameOfLifeRealisator();
         public Form1()
         {
