@@ -11,25 +11,22 @@ namespace GameOfLifeImpl
         public byte[,] CalculateNextGeneration(byte[,] grid)
         {
             var newGrid = (byte[,])grid.Clone();
-            for (int i = 0; i < GridSize; i++)
+            Parallel.For(0, GridSize, i => Parallel.For(0, GridSize, j =>
             {
-                Parallel.For(0, GridSize, ctr =>
+                var countNeigbors = CountNeigbors(grid, i, j);
+                if (grid[i, j] == 1)
                 {
-                    var countNeigbors = CountNeigbors(grid, i, ctr);
-                    if (grid[i, ctr] == 1)
+                    if (countNeigbors < 2 || countNeigbors > 3)
+                        newGrid[i, j] = 0;
+                }
+                else
+                {
+                    if (countNeigbors == 3)
                     {
-                        if (countNeigbors < 2 || countNeigbors > 3)
-                            newGrid[i, ctr] = 0;
+                        newGrid[i, j] = 1;
                     }
-                    else
-                    {
-                        if (countNeigbors == 3)
-                        {
-                            newGrid[i, ctr] = 1;
-                        }
-                    }
-                });
-            }
+                }
+            }));
             return newGrid;
         }
 
