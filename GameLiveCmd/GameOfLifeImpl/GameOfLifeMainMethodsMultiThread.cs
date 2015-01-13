@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace GameOfLifeImpl
@@ -34,13 +31,10 @@ namespace GameOfLifeImpl
         {
             var grid = new byte[GridSize, GridSize];
             var rnd = new Random(DateTime.Now.Second);
-            for (int i = 0; i < GridSize; i++)
+            Parallel.For(0, GridSize, i => Parallel.For(0, GridSize, j =>
             {
-                for (int j = 0; j < GridSize; j++)
-                {
-                    grid[i, j] = (byte)rnd.Next(2);
-                }
-            }
+                grid[i, j] = (byte) rnd.Next(2);
+            }));
             return grid;
         }
     }

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using GameOfLifeImpl;
@@ -10,6 +12,7 @@ namespace WindowsFormsApplication1
     {
         private byte[,] _grid;
         private readonly Label[,] _labels; 
+        private List<long> _elapsMs = new List<long>();  
 
         readonly IGameOfLifeMainMethods _gameOfLife = new GameOfLifeMainMethodsMultiThread();
         readonly FormsGameOfLifeRealisator _gameOfLifeForForms = new FormsGameOfLifeRealisator();
@@ -65,7 +68,11 @@ namespace WindowsFormsApplication1
             for (var i = 0; i < iterationCount; i++)
             {
                 _gameOfLifeForForms.WriteGeneration(_grid, _labels);
+                var stopwatch = new Stopwatch();
+                stopwatch.Start();
                 _grid = _gameOfLife.CalculateNextGeneration(_grid);
+                stopwatch.Stop();
+                _elapsMs.Add(stopwatch.ElapsedMilliseconds);
             }
         }
 
@@ -80,6 +87,17 @@ namespace WindowsFormsApplication1
         {
             _grid = _gameOfLife.MakeRandomGeneration();
             _gameOfLifeForForms.WriteGeneration(_grid, _labels);
+        }
+
+        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            long sum = 0;
+            foreach (var elapsM in _elapsMs)
+            {
+                sum += elapsM;
+            }
+            var res = sum/_elapsMs.Count;
+            MessageBox.Show(res.ToString());
         }
     }
 }
