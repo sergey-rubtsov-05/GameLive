@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.Windows.Forms;
+using WindowsFormsApplication1.Properties;
+using Autofac;
 using GameOfLifeImpl;
 
 namespace WindowsFormsApplication1
@@ -12,13 +15,30 @@ namespace WindowsFormsApplication1
     {
         private byte[,] _grid;
         private readonly Label[,] _labels; 
-        private List<long> _elapsMs = new List<long>();  
+        private readonly List<long> _elapsMs = new List<long>();
 
-        readonly IGameOfLifeMainMethods _gameOfLife = new GameOfLifeMainMethodsMultiThread();
+        readonly IGameOfLifeMainMethods _gameOfLife;//new GameOfLifeMainMethodsMultiThread();
         readonly FormsGameOfLifeRealisator _gameOfLifeForForms = new FormsGameOfLifeRealisator();
         public Form1()
         {
             InitializeComponent();
+            var builder = new ContainerBuilder();
+            switch (MessageBox.Show(Resources.useMultiThread, Resources.useMultiThread,
+                MessageBoxButtons.YesNo))
+            {
+                case DialogResult.Yes:
+                {
+                    builder.RegisterType<GameOfLifeMainMethodsMultiThread>().As<IGameOfLifeMainMethods>();
+                    break;
+                }
+                case DialogResult.No:
+                {
+                    builder.RegisterType<GameOfLifeMainMethodsSingleThread>().As<IGameOfLifeMainMethods>();
+                    break;
+                }
+            }
+            var container = builder.Build();
+            _gameOfLife = container.Resolve<IGameOfLifeMainMethods>();
             const int gridSize = GameOfLifeParameters.GridSize;
             _labels = new Label[gridSize, gridSize];
             int x;
@@ -97,7 +117,7 @@ namespace WindowsFormsApplication1
                 sum += elapsM;
             }
             var res = sum/_elapsMs.Count;
-            MessageBox.Show(res.ToString());
+            MessageBox.Show(res.ToString(CultureInfo.InvariantCulture));
         }
     }
 }
